@@ -1,0 +1,7 @@
+query BookQuery($bookId: String!) {
+  book(id: $bookId) {
+    id
+    name
+    genre
+  }
+}
