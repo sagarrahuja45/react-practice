@@ -4,6 +4,7 @@ import { MyContextProvider } from "./myContext";
 import Counter from "./counter";
 import CounterRedux from "./counterRedux";
 import BookComponent from "./components/BookComponent";
+import LinkForm from "./components/addLink";
 import { Provider } from "react-redux";
 import store from "./store";
 
@@ -14,6 +15,7 @@ const App = () => {
     //   </Provider>
     <div>
     <BookComponent/>
+    <LinkForm/>
   </div>
   )
 }

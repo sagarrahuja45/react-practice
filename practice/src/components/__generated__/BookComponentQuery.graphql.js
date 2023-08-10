@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<225ff2e55d7eeb78597714426f8ca2d8>>
+ * @generated SignedSource<<40a15c98519716a233b4a395c065e90f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -36,6 +36,13 @@ var v0 = [
         "alias": null,
         "args": null,
         "kind": "ScalarField",
+        "name": "url",
+        "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
         "name": "description",
         "storageKey": null
       }
@@ -61,16 +68,16 @@ return {
     "selections": (v0/*: any*/)
   },
   "params": {
-    "cacheID": "cdbcd67772d763a9f11d549913d4dbd4",
+    "cacheID": "cb1b3238d8a38ecd2d4b181904bc3741",
     "id": null,
     "metadata": {},
     "name": "BookComponentQuery",
     "operationKind": "query",
-    "text": "query BookComponentQuery {\n  info\n  feed {\n    id\n    description\n  }\n}\n"
+    "text": "query BookComponentQuery {\n  info\n  feed {\n    id\n    url\n    description\n  }\n}\n"
   }
 };
 })();
 
-node.hash = "d3f087ee41aa30ccb918fedb02a76756";
+node.hash = "2942fe1066871a78913e91100fc70a99";
 
 module.exports = node;
