@@ -14,7 +14,7 @@ const App = () => {
     // <CounterRedux/>
     //   </Provider>
     <div>
-    <BookComponent/>
+    <BookComponent />
     <LinkForm/>
   </div>
   )
