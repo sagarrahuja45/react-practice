@@ -1,75 +1,98 @@
-import React, { useState, useEffect } from "react";
-import { useLazyLoadQuery, useQueryLoader } from "react-relay";
-import { graphql } from "babel-plugin-relay/macro";
-import { useMutation } from "react-relay";
-import BookComponentQuery from "./BookComponentQuery.js";
-import ListCompo from "./listComponent.js";
+  import React, { useEffect } from "react";
+  import { useQueryLoader } from "react-relay";
+  import { graphql } from "babel-plugin-relay/macro";
+  import { useMutation } from "react-relay";
+  import { useForm } from "react-hook-form";
+  import ListCompo from "./listComponent.js";
+  import BookComponentQuery from "./BookComponentQuery.js";
 
-const BookComponent = () => {
+  const BookComponent = () => {
 
-    const [list, setList] = useState([])
-  const [commitDelete] = useMutation(
+    const [commitDelete] = useMutation(
+      graphql`
+        mutation BookComponentMutation($id: ID!) {
+          deleteLink(id: $id) {
+            id
+          }
+        }
+      `
+    );
+    const { register, handleSubmit, reset } = useForm();
+  
+  const [commit, isInFlight] = useMutation(
     graphql`
-      mutation BookComponentMutation($id: ID!) {
-        deleteLink(id: $id) {
+      mutation BookComponentaddLinkMutation($url: String!, $description: String!) {
+        post(url: $url, description: $description) {
           id
+          ...BookComponenturlFragment
         }
       }
     `
   );
 
-  //   const data = useLazyLoadQuery(
-  //     graphql`
-  //       query BookComponentQuery {
-  //         info
-  //         feed {
-  //           id
-  //           url
-  //           description
-  //         }
-  //       }
-  //     `
-  //   );
-
-  const [queryRef, loadQuery] = useQueryLoader(graphql`
-  query BookComponentQuery {
-    info
-    feed {
-      id
-      url
-      description
-    }
-  }
-`);
-
-
-
-  useEffect(() => {
-      loadQuery({});
-  }, [loadQuery]);
-
-
-  const handleDelete = (id) => {
-    commitDelete({
+  const linkSubmit = async(data) => {
+    await commit({
       variables: {
-        id: id,
+        url: data.url,
+        description: data.description,
       },
-    });
+      onCompleted: ()=>{
+        loadQuery({},{fetchPolicy: "network-only"});
+        reset();
+      }
+    },
+    );
   };
 
-  return (
-    <div>
-      <h2>Hello</h2>
-      <ListCompo queryRef={queryRef}/>
-      {/* {list.map((link) => (
-        <div key={link.id}>
-          <p>{link.id}</p>
-          <p>{link.url}</p>
-          <p>{link.description}</p>
-          <button onClick={() => handleDelete(link.id)}>delete</button>
-        </div>
-      ))} */}
-    </div>
-  );
-};
-export default BookComponent;
+    const [queryRef, loadQuery] = useQueryLoader(BookComponentQuery);
+
+  const BookComponenturlFragment = graphql`
+  fragment BookComponenturlFragment on Link {
+    url
+    description
+  }`
+
+
+
+    useEffect(() => {
+        loadQuery({});
+    }, []);
+
+
+    const handleDelete = (id) => {
+      commitDelete({
+        variables: {
+          id: id,
+        },
+      });
+    };
+
+    return (
+      <div>
+        <h2>Hello</h2>
+        <ListCompo queryRef={queryRef} urlFragment={BookComponenturlFragment} />
+        <div>
+        <form onSubmit={handleSubmit(linkSubmit)} disabled={isInFlight}>
+          <input
+            type="text"
+            placeholder="url"
+            name="url"
+            {...register("url", {
+              required: "url is required",
+            })}
+          />
+          <input
+            type="text"
+            placeholder="description"
+            name="description"
+            {...register("description", {
+              required: "description is required",
+            })}
+          />
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+      </div>
+    );
+  };
+  export default BookComponent;

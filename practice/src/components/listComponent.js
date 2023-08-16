@@ -1,23 +1,17 @@
 import React from "react";
 import { usePreloadedQuery } from "react-relay";
 import BookComponentQuery from "./BookComponentQuery.js";
+import ListingItem from "./listing.js";
 
 
-const ListCompo = ({ queryRef }) => {
+const ListCompo = ({ queryRef, urlFragment }) => {
   if (queryRef) {
     const link = usePreloadedQuery(BookComponentQuery, queryRef);
-    console.log("link", link.feed);
-
+   
     return (
       <div>
-        <h2>Hello</h2>
-        {link.feed.map((linkItem) => (
-          <div key={linkItem.id}>
-            <p>{linkItem.id}</p>
-            <p>{linkItem.url}</p>
-            <p>{linkItem.description}</p>
-          </div>
-        ))}
+        <h2>list of urls</h2>
+      {link.feed.map((item) => <ListingItem item={item} urlFragment={urlFragment}></ListingItem>)}
       </div>
     );
   }

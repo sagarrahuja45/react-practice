@@ -4,9 +4,7 @@ const BookComponentQuery = graphql`
   query BookComponentQuery {
     info
     feed {
-      id
-      url
-      description
+      ...BookComponenturlFragment
     }
   }
 `;

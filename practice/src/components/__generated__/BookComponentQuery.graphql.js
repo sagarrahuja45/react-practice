@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<40a15c98519716a233b4a395c065e90f>>
+ * @generated SignedSource<<5d0fdf62b10c7df5d1ce733ea6ffdcb0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,54 +9,38 @@
 'use strict';
 
 var node = (function(){
-var v0 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "info",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "concreteType": "Link",
-    "kind": "LinkedField",
-    "name": "feed",
-    "plural": true,
-    "selections": [
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "id",
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "url",
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "description",
-        "storageKey": null
-      }
-    ],
-    "storageKey": null
-  }
-];
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "info",
+  "storageKey": null
+};
 return {
   "fragment": {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
     "name": "BookComponentQuery",
-    "selections": (v0/*: any*/),
+    "selections": [
+      (v0/*: any*/),
+      {
+        "alias": null,
+        "args": null,
+        "concreteType": "Link",
+        "kind": "LinkedField",
+        "name": "feed",
+        "plural": true,
+        "selections": [
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "BookComponenturlFragment"
+          }
+        ],
+        "storageKey": null
+      }
+    ],
     "type": "Query",
     "abstractKey": null
   },
@@ -65,19 +49,53 @@ return {
     "argumentDefinitions": [],
     "kind": "Operation",
     "name": "BookComponentQuery",
-    "selections": (v0/*: any*/)
+    "selections": [
+      (v0/*: any*/),
+      {
+        "alias": null,
+        "args": null,
+        "concreteType": "Link",
+        "kind": "LinkedField",
+        "name": "feed",
+        "plural": true,
+        "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "url",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "description",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "id",
+            "storageKey": null
+          }
+        ],
+        "storageKey": null
+      }
+    ]
   },
   "params": {
-    "cacheID": "cb1b3238d8a38ecd2d4b181904bc3741",
+    "cacheID": "05e469998d700c99b514b75971aa4116",
     "id": null,
     "metadata": {},
     "name": "BookComponentQuery",
     "operationKind": "query",
-    "text": "query BookComponentQuery {\n  info\n  feed {\n    id\n    url\n    description\n  }\n}\n"
+    "text": "query BookComponentQuery {\n  info\n  feed {\n    ...BookComponenturlFragment\n    id\n  }\n}\n\nfragment BookComponenturlFragment on Link {\n  url\n  description\n}\n"
   }
 };
 })();
 
-node.hash = "2942fe1066871a78913e91100fc70a99";
+node.hash = "230288e6fb4df277ab5362e89fc7a238";
 
 module.exports = node;
